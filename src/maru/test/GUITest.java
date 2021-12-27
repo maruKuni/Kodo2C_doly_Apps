@@ -4,7 +4,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
 import javafx.scene.layout.*;
-/**/
+/*表示テスト用のクラス */
 public class GUITest extends Application{
 	Button btn;
 	public static void main(String[] args) {
