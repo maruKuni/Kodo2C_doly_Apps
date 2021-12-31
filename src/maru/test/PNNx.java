@@ -29,7 +29,7 @@ public class PNNx {
 		assert (numBuffer == maxBuf);
 		int count = 0;
 		for(int i = 0; i < IBIBuffer.length - 1; i++) {
-			if(Math.abs(IBIBuffer[i] - IBIBuffer[i - 1]) > 10*x) {
+			if(Math.abs(IBIBuffer[i] - IBIBuffer[i + 1]) > 10*x) {
 				count++;
 			}
 		}
