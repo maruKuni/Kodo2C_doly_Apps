@@ -1,17 +1,14 @@
 package maru.apps;
 
 import java.util.*;
-import java.awt.desktop.ScreenSleepEvent;
 import java.io.*;
 import javafx.application.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.*;
-import javafx.util.Duration;
 import javafx.event.*;
-import javafx.animation.*;
 /** 実行用クラス
  * ウィンドウ表示とメインフロー
  * @author KunimaruYuta
@@ -74,16 +71,30 @@ public class MainApps extends Application {
 		new Thread(() ->{
 			for(Figure f:figure) {
 				Platform.runLater(() -> view.setImage(f.getImage()));
-				for(int i = 0;i < 10; i++) {
+				for(int i = 0;i < 50; i++) {
 					f.addPNN(pnn.getPNNx());
 					try {
-						Thread.sleep(500);
+						Thread.sleep(200);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
 				}
 			}
-			
+			BorderPane result = new BorderPane();
+			FlowPane images = new FlowPane();
+			images.setAlignment(javafx.geometry.Pos.CENTER);
+			figure.stream()
+				  .sorted()
+				  .limit(5)
+				  .forEach(fig ->{
+					 ImageView tmp = new ImageView(fig.getImage());
+					 tmp.setFitWidth(320);
+					 tmp.setFitHeight(300);
+					 images.getChildren().add(tmp);
+				  });
+			result.setTop(new Label("あなたの好きな画像 Top 5"));
+			result.setCenter(images);
+			scene.setRoot(result);
 		}).start();;
 		
 	}
