@@ -1,6 +1,7 @@
 package maru.apps;
 
 import java.util.*;
+import java.awt.desktop.ScreenSleepEvent;
 import java.io.*;
 import javafx.application.*;
 import javafx.scene.*;
@@ -8,7 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
+import javafx.util.Duration;
 import javafx.event.*;
+import javafx.animation.*;
 /** 実行用クラス
  * ウィンドウ表示とメインフロー
  * @author KunimaruYuta
@@ -49,13 +52,12 @@ public class MainApps extends Application {
 			@Override
 			public void run() {
 				if(pnn.isPNNavailable()) {
-					
 					startButton.setDisable(false);
 					timer.cancel();
 				}
 			}
 		};
-		timer.schedule(task, 100);
+		timer.schedule(task, 0, 100);
 	}
 
 	private void initList() {
@@ -69,19 +71,21 @@ public class MainApps extends Application {
 	}
 	private void processing(ActionEvent e) {
 		bp.setCenter(view);
-		figure.stream().forEach(this::evaluateImage);
-	}
-	private void evaluateImage(Figure f) {
-		view.setImage(f.getImage());
-		long startTime = System.currentTimeMillis();
-		
-		while(System.currentTimeMillis() - startTime < 10000) {
-			f.addPNN(pnn.getPNNx());
-			try {
-				Thread.sleep(1000L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		new Thread(() ->{
+			for(Figure f:figure) {
+				Platform.runLater(() -> view.setImage(f.getImage()));
+				for(int i = 0;i < 10; i++) {
+					f.addPNN(pnn.getPNNx());
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
-		}
+			
+		}).start();;
+		
 	}
+	
 }
