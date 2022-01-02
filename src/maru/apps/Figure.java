@@ -2,7 +2,7 @@ package maru.apps;
 import java.io.InputStream;
 import java.util.*;
 import javafx.scene.image.*;
-public class Figure implements Comparator<Figure>{
+public class Figure implements Comparable<Figure>{
 	private Image image;
 	ArrayList<Double> pNNs;
 	public Figure(InputStream input) {
@@ -22,8 +22,9 @@ public class Figure implements Comparator<Figure>{
 		return image;
 	}
 	
+	
 	@Override
-	public int compare(Figure o1, Figure o2) {
-		return (int)((o1.getPNN() - o2.getPNN())*100.0);
+	public int compareTo(Figure o) {
+		return (int)((this.getPNN() - o.getPNN())*100.0);
 	}
 }

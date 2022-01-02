@@ -1,17 +1,15 @@
 package maru.apps;
 
 import java.util.*;
-import java.awt.desktop.ScreenSleepEvent;
 import java.io.*;
 import javafx.application.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
-import javafx.util.Duration;
 import javafx.event.*;
-import javafx.animation.*;
 /** 実行用クラス
  * ウィンドウ表示とメインフロー
  * @author KunimaruYuta
@@ -83,7 +81,22 @@ public class MainApps extends Application {
 					}
 				}
 			}
-			
+			BorderPane result = new BorderPane();
+			FlowPane images = new FlowPane();
+			result.setTop(new Label("あなたの好きな画像 TOP5"));
+			figure.stream()
+				  .sorted()
+				  .limit(5)
+				  .forEach(fig -> {
+					  ImageView tmp = new ImageView();
+					  tmp.setImage(fig.getImage());
+					  tmp.setFitWidth(320);
+					  tmp.setFitHeight(360);
+					  images.getChildren().add(tmp);
+				  });
+			images.setAlignment(javafx.geometry.Pos.CENTER);
+			result.setCenter(images);
+			scene.setRoot(result);
 		}).start();;
 		
 	}
