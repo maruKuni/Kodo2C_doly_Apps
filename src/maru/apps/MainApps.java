@@ -21,6 +21,15 @@ public class MainApps extends Application {
 	private BorderPane bp;
 	private PNN50 pnn;
 	private Scene scene;
+	private static final Comparator<Figure> orderFigures = (f1, f2) -> {
+		if(f1.getPNN() < f2.getPNN()) {
+			return -1;
+		}else if(f1.getPNN() > f2.getPNN()) {
+			return 1;
+		}else {
+			return 0;
+		}
+	};
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -84,7 +93,7 @@ public class MainApps extends Application {
 			FlowPane images = new FlowPane();
 			images.setAlignment(javafx.geometry.Pos.CENTER);
 			figure.stream()
-				  .sorted()
+				  .sorted(orderFigures.reversed())
 				  .limit(5)
 				  .forEach(fig ->{
 					 ImageView tmp = new ImageView(fig.getImage());

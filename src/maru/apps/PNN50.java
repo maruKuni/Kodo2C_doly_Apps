@@ -11,7 +11,7 @@ public class PNN50 implements Runnable{
 	public PNN50() {
 		IBIBuffer = new int[maxBuf];
 		numBuffer = 0;
-		port = SerialPort.getCommPort("COM4");
+		port = SerialPort.getCommPorts()[0];
 		port.openPort();
 		port.setBaudRate(115200);
 		port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
