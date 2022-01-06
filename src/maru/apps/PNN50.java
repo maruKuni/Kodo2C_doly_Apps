@@ -55,7 +55,7 @@ public class PNN50 implements Runnable{
 						tmp += 10*tmp + (inData - '0');
 					}
 					addIBI(tmp);
-					
+					System.out.println(tmp);
 				}
 				
 			}catch(Exception e) {
