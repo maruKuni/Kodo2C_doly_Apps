@@ -1,0 +1,2 @@
+jlink --compress=2 --module-path "C:\Program Files\Java\jdk-17.0.1\jmods;C:\Program Files\Java\javafx-jmods-11.0.2;C:\temp" --add-modules java.base,javafx.base,javafx.controls,javafx.graphics,com.fazecast.jSerialComm --output jre-11.0.2
+exewrap main.jar
