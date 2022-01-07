@@ -74,6 +74,7 @@ public class MainApps extends Application {
 				e.printStackTrace();
 			}
 		}
+		Collections.shuffle(figure, new Random(System.currentTimeMillis()));
 	}
 	private void processing(ActionEvent e) {
 		bp.setCenter(view);
