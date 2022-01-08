@@ -11,7 +11,12 @@ public class PNN50 implements Runnable{
 	public PNN50() {
 		IBIBuffer = new int[maxBuf];
 		numBuffer = 0;
-		port = SerialPort.getCommPorts()[0];
+		for(SerialPort tmp:SerialPort.getCommPorts()) {
+			if(tmp.getDescriptivePortName().startsWith("Arduino")) {
+				port = tmp;
+				break;
+			}
+		}
 		port.openPort();
 		port.setBaudRate(115200);
 		port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
@@ -62,5 +67,8 @@ public class PNN50 implements Runnable{
 				e.printStackTrace();
 			}
 		}
+	}
+	public void close() {
+		port.closePort();
 	}
 }

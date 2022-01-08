@@ -52,7 +52,10 @@ public class MainApps extends Application {
 		stage.setHeight(720);
 		stage.setTitle("Favorite Face");
 		stage.show();
-		stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> System.exit(0));
+		stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
+			pnn.close();
+			System.exit(0);
+		});
 		Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
 			
