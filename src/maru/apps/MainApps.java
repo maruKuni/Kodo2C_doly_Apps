@@ -50,6 +50,7 @@ public class MainApps extends Application {
 		stage.setScene(scene);
 		stage.setWidth(1280);
 		stage.setHeight(720);
+		stage.setTitle("Favorite Face");
 		stage.show();
 		stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> System.exit(0));
 		Timer timer = new Timer(false);
