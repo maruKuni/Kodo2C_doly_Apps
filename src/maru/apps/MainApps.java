@@ -24,7 +24,10 @@ public class MainApps extends Application {
 	private BorderPane bp;
 	private PNN50 pnn;
 	private Scene scene;
-	private Label title;
+	private Label title, description;
+	private Stage stage;
+	private final String descriptionText  = 
+			"※FF値\npNN50の平均値により算出. 1に近いほどその顔が好きであることを表している．";
 	private static final Comparator<Figure> orderFigures = (f1, f2) -> {
 		if (f1.getPNN() < f2.getPNN()) {
 			return -1;
@@ -41,8 +44,11 @@ public class MainApps extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		this.stage = stage;
 		title = new Label("Favorite Face");
 		title.setFont(Font.font("Times New Roman", FontWeight.NORMAL, FontPosture.ITALIC,50));
+		description = new Label(descriptionText);
+		BorderPane.setAlignment(description, Pos.BOTTOM_RIGHT);
 		VBox vertical = new VBox(10);
 		bp = new BorderPane();
 		view = new ImageView();
@@ -56,6 +62,7 @@ public class MainApps extends Application {
 		vertical.getChildren().addAll(title, startButton);
 		vertical.setAlignment(Pos.CENTER);
 		bp.setCenter(vertical);
+		bp.setBottom(description);
 		scene = new Scene(bp);
 		stage.setScene(scene);
 		stage.setWidth(1280);
@@ -93,6 +100,7 @@ public class MainApps extends Application {
 	}
 
 	private void processing(ActionEvent e) {
+		stage.setTitle("Favorite Face - 計測中...");
 		bp.setCenter(view);
 		new Thread(() -> {
 			for (Figure f : figure) {
@@ -122,6 +130,7 @@ public class MainApps extends Application {
 				tmpBP.setCenter(tmp);
 				images.getChildren().add(tmpBP);
 			}
+			Platform.runLater(() -> stage.setTitle("Favorite Face - 計測終了"));
 			result.setTop(new Label("あなたの好きな顔 Top 5"));
 			result.setCenter(images);
 			scene.setRoot(result);
