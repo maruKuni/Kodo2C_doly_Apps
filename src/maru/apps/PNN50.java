@@ -6,7 +6,7 @@ public class PNN50 implements Runnable{
 	private int numBuffer;
 	private static final int maxBuf = 30;
 	private static final int x = 50;
-	private SerialPort port;
+	private SerialPort port = null;
 	private InputStream in;
 	public PNN50() {
 		IBIBuffer = new int[maxBuf];
@@ -16,6 +16,9 @@ public class PNN50 implements Runnable{
 				port = tmp;
 				break;
 			}
+		}
+		if(port == null) {
+			port = SerialPort.getCommPorts()[0];
 		}
 		port.openPort();
 		port.setBaudRate(115200);
