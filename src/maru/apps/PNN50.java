@@ -64,7 +64,7 @@ public class PNN50 implements Runnable{
 				}
 				
 			}catch(Exception e) {
-				e.printStackTrace();
+				return;
 			}
 		}
 	}
