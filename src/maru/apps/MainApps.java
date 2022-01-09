@@ -28,6 +28,8 @@ public class MainApps extends Application {
 	private Stage stage;
 	private final String descriptionText  = 
 			"※FF値\npNN50の平均値により算出. \n1に近いほどその顔が好きであることを表している．";
+	private int numPNN;
+	private int intervalPNN;
 	private static final Comparator<Figure> orderFigures = (f1, f2) -> {
 		if (f1.getPNN() < f2.getPNN()) {
 			return -1;
@@ -75,6 +77,7 @@ public class MainApps extends Application {
 			pnn.close();
 			System.exit(0);
 		});
+		setPNNOption();
 		Timer timer = new Timer(false);
 		TimerTask task = new TimerTask() {
 
@@ -107,10 +110,10 @@ public class MainApps extends Application {
 		new Thread(() -> {
 			for (Figure f : figure) {
 				Platform.runLater(() -> view.setImage(f.getImage()));
-				for (int i = 0; i < 50; i++) {
+				for (int i = 0; i < numPNN; i++) {
 					f.addPNN(pnn.getPNNx());
 					try {
-						Thread.sleep(200);
+						Thread.sleep(intervalPNN);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
@@ -143,5 +146,28 @@ public class MainApps extends Application {
 		;
 
 	}
-
+	private void setPNNOption() {
+		BufferedReader br = null;
+		try {
+		 br = new BufferedReader(new InputStreamReader(new FileInputStream("settings.txt")));
+		String line;
+		
+			while((line = br.readLine()) != null) {
+				if(line.split(":")[0].equals("Times")) {
+					numPNN = Integer.parseInt(line.split(":")[1]);
+				}else if(line.split(":")[0].equals("Interval")) {
+					intervalPNN = Integer.parseInt(line.split(":")[1]);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
