@@ -42,7 +42,7 @@ public class PNN50 implements Runnable{
 		assert (isPNNavailable());
 		int count = 0;
 		for(int i = 0; i < IBIBuffer.length - 1; i++) {
-			if(Math.abs(IBIBuffer[i] - IBIBuffer[i + 1]) > 10*x) {
+			if(Math.abs(IBIBuffer[i] - IBIBuffer[i + 1]) > x) {
 				count++;
 			}
 		}
@@ -52,6 +52,7 @@ public class PNN50 implements Runnable{
 	@Override
 	public void run() {
 		char inData;
+		StringBuffer buf = new StringBuffer();
 		while(true) {
 			try {
 				// 読み込み
@@ -60,9 +61,9 @@ public class PNN50 implements Runnable{
 				if(inData == 'Q') {
 					int tmp = 0;
 					while((inData = (char)in.read()) != '\n') {
-						tmp += 10*tmp + (inData - '0');
+						buf.append(inData);
 					}
-					addIBI(tmp);
+					addIBI(Integer.parseInt(buf.toString()));
 					System.out.println(tmp);
 				}
 				
