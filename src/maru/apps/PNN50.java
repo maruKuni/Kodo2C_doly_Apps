@@ -64,6 +64,7 @@ public class PNN50 implements Runnable{
 						buf.append(inData);
 					}
 					addIBI(Integer.parseInt(buf.toString()));
+					buf.delete(0, buf.length() - 1);
 					System.out.println(tmp);
 				}
 				
